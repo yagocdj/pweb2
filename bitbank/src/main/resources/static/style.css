@@ -1,0 +1,45 @@
+/*
+Use this CSS to style your HTML templates
+This CSS was created by Yago Aguiar
+ */
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: min(10em, 10em);
+    gap: 5px;
+}
+
+input[name="nome"] {
+    width: 15em;
+}
+
+/* table styling */
+table {
+    table-layout: fixed;
+    width: 100%;
+    border: 2px solid black;
+    border-collapse: collapse;
+}
+
+thead th:nth-child(1) {
+    width: 10%;
+}
+
+thead th:nth-child(2) {
+    width: 40%;
+}
+
+thead th:nth-child(3) {
+    width: 30%;
+}
+
+thead th:nth-child(4) {
+    width: 10%;
+}
+
+thead th:nth-child(5) {
+    width: 10%;
+}
+
+/* end - table styling */

@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/correntistas")
@@ -27,31 +28,32 @@ public class CorrentistaController {
     }
 
     @PostMapping("/save")
-    public String save(Correntista correntista, Model model) {
+    public ModelAndView save(Correntista correntista, ModelAndView mv) {
         String correntistaName = correntista.getNome();
+        mv.setViewName("correntistas/list");
 
         // FIXME - this if-else block deserves a REFACTOR!
         if (!correntistaService.isFieldNotBlank(correntistaName)) {
-            model.addAttribute("mensagem",
+            mv.addObject("mensagem",
                     "Ops! O campo \"nome\" deve ter algum valor (espaços em branco não contam).");
-            return "correntistas/form";
+            mv.setViewName("correntistas/form");
         } else if (!correntistaService.isNameSmallerThan50Chars(correntistaName)) {
-            model.addAttribute("mensagem",
+            mv.addObject("mensagem",
                     "Ops! O campo \"nome\" deve ter até 50 caracteres.");
-            return "correntistas/form";
+            mv.setViewName("correntistas/form");
         } else if (!correntistaService.isFieldNotBlank(correntista.getEmail())) {
-            model.addAttribute("mensagem",
+            mv.addObject("mensagem",
                     "Ops! O campo \"email\" deve ter algum valor (espaços em branco não contam).");
-            return "correntistas/form";
+            mv.setViewName("correntistas/form");
         } else if (!correntistaService.isFieldNotBlank(correntista.getSenha())) {
-            model.addAttribute("mensagem",
+            mv.addObject("mensagem",
                     "Ops! O campo \"senha\" deve ter algum valor (espaços em branco não contam).");
-            return "correntistas/form";
+            mv.setViewName("correntistas/form");
         }
 
         correntistaRepository.save(correntista);
-        model.addAttribute("correntistas", correntistaRepository.findAll());
-        return "correntistas/list";
+        mv.addObject("correntistas", correntistaRepository.findAll());
+        return mv;
     }
 
 }

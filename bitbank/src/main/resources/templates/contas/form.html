@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <title>Cadastro de contas</title>
+</head>
+<body>
+    <h1>BitBank - Cadastro de contas</h1>
+    <div th:text="${mensagem}" style="color: red"></div>
+
+    <form th:action="@{/contas/save}" method="POST" th:object="${conta}">
+        <input type="hidden" th:field="*{id}">
+
+        <!--
+        É importante salientar que o th:field já gera os atributos
+        "name" e "id" do meu elemento do DOM.
+
+        Eu só coloquei o "id" pois a IDE reclama no atributo "for"
+        da minha label
+        -->
+        <label for="numero">Numero da conta:</label>
+        <input type="number" id="numero" th:field="*{numero}">
+
+        <label for="correntista">Correntista</label>
+        <select id="correntista" th:field="*{correntista.id}">
+            <option th:each="correntista : ${correntistas}"
+                    th:label="${correntista.nome}"
+                    th:value="${correntista.id}"></option>
+        </select>
+
+        <label for="data">Data</label>
+        <input type="date" id="data" th:field="*{data}">
+
+        <button type="submit">Salvar</button>
+        <a th:href="@{/contas/list}">Cancelar</a>
+    </form>
+</body>
+</html>

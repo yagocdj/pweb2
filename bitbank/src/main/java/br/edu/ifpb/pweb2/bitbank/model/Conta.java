@@ -2,6 +2,7 @@ package br.edu.ifpb.pweb2.bitbank.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,11 +21,11 @@ public class Conta implements Serializable {
 
     private String numero;
 
-    private Date data;
+    private LocalDate data;
 
     private Set<Transacao> transacoes = new HashSet<Transacao>();
 
-    private Correntista correntista;
+    private Correntista correntista = new Correntista();
 
     public BigDecimal getSaldo() {
         BigDecimal total = BigDecimal.ZERO;

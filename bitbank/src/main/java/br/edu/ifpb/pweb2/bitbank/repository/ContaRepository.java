@@ -3,11 +3,12 @@ package br.edu.ifpb.pweb2.bitbank.repository;
 import br.edu.ifpb.pweb2.bitbank.model.Conta;
 import br.edu.ifpb.pweb2.bitbank.model.Correntista;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Component
+@Repository
 public class ContaRepository {
     private Map<Integer, Conta> repositorio = new HashMap<Integer, Conta>();
 
@@ -15,11 +16,12 @@ public class ContaRepository {
         return repositorio.get(id);
     }
 
-    public void save(Conta conta) {
+    public Conta save(Conta conta) {
         Integer id = null;
         id = (conta.getId() == null) ? this.getMaxId() + 1 : conta.getId();
         conta.setId(id);
         repositorio.put(id, conta);
+        return conta;
     }
 
     public List<Conta> findAll() {

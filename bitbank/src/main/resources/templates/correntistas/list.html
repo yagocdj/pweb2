@@ -9,9 +9,13 @@
     <title>Cadastro de correntistas</title>
 </head>
 <body>
-    <h1>Cadastro de correntistas</h1>
+    <h1>BitBank - Cadastro de correntistas</h1>
 
     <div th:text="${mensagem}" style="color: red"></div>
+
+    <form th:action="@{/correntistas/form}" method="get">
+        <button type="submit">Novo</button>
+    </form>
 
     <table>
         <thead>

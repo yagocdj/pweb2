@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 @Repository
 public class ContaRepository {
-    private Map<Integer, Conta> repositorio = new HashMap<Integer, Conta>();
+    private static final Map<Integer, Conta> repositorio = new HashMap<Integer, Conta>();
 
     public Conta findById(Integer id) {
         return repositorio.get(id);
@@ -18,7 +18,7 @@ public class ContaRepository {
 
     public Conta save(Conta conta) {
         Integer id = null;
-        id = (conta.getId() == null) ? this.getMaxId() + 1 : conta.getId();
+        id = (conta.getId() == null) ? this.getMaxId() : conta.getId();
         conta.setId(id);
         repositorio.put(id, conta);
         return conta;

@@ -10,6 +10,7 @@ import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
 @AllArgsConstructor
@@ -21,6 +22,7 @@ public class Conta implements Serializable {
 
     private String numero;
 
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate data;
 
     private Set<Transacao> transacoes = new HashSet<Transacao>();

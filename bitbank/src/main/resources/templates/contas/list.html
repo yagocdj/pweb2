@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" xmlns:th="https://www.thymeleaf.org/">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -9,6 +9,31 @@
     <title>BitBank - Listagem de contas</title>
 </head>
 <body>
-    <h1></h1>
+    <h1>Contas cadastradas</h1>
+
+    <form th:action="@{/contas/form}" method="GET">
+        <button type="submit">Nova</button>
+    </form>
+
+    <div th:text="${mensagem}" style="color: red"></div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Número</th>
+                <th>Data</th>
+                <th>Correntista</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="conta : ${contas}">
+                <td>[[${conta.id}]]</td>
+                <td th:text="${conta.numero}"></td>
+                <td th:text="${#temporals.format(conta.data, 'dd/MM/yyyy')}"></td>
+                <td th:text="${conta.correntista.nome}"></td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 </html>

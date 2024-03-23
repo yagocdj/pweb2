@@ -17,7 +17,7 @@ public class CorrentistaRepository {
 
     public Correntista save(Correntista correntista) {
         Integer id = null;
-        id = (correntista.getId() == null) ? this.getMaxId() + 1 : correntista.getId();
+        id = (correntista.getId() == null) ? this.getMaxId() : correntista.getId();
         correntista.setId(id);
         repositorio.put(id, correntista);
         return correntista;

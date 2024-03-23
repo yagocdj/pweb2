@@ -16,9 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class CorrentistaController {
 
     @Autowired
-    private CorrentistaRepository correntistaRepository;
-
-    @Autowired
     private CorrentistaService correntistaService;
 
     @GetMapping("/form")
@@ -51,8 +48,8 @@ public class CorrentistaController {
             mv.setViewName("correntistas/form");
         }
 
-        correntistaRepository.save(correntista);
-        mv.addObject("correntistas", correntistaRepository.findAll());
+        correntistaService.save(correntista);
+        mv.addObject("correntistas", correntistaService.findAll());
         return mv;
     }
 

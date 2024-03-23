@@ -45,4 +45,9 @@ public class ContaController {
         return mv;
     }
 
+    @GetMapping("/list")
+    public String listAll() {
+        return "contas/list";
+    }
+
 }

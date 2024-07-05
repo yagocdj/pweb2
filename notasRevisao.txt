@@ -1,0 +1,12 @@
+# Revisão pós greve
+
+Controller -> lidar com as requests
+Service -> contém as regras de negócio
+DAO -> acesso ao banco de dados (utiliza a API JPA)
+
+Dica - evite o uso de chaves compostas; use chaves sintéticas (IDs criados unicamente com a finalidade de identificar uma entidade).
+
+O SpringBoot vem preparado para montar uma classe DAO recebendo apenas a o tipo da entidade e o tipo da chave.
+	- Já são gerados alguns métodos de manipulação de dados.
+	- No JPA, um DAO é chamado de repositório. 
+	- Já expõe todos os métodos necessários para um CRUD.

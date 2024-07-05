@@ -42,10 +42,20 @@ public class ContaService implements Service<Conta, Integer> {
     }
 
     public Conta findByNumeroWithTransacoes(String nuConta) {
-        return contaRepository.findByNumeroWithTransacoes(nuConta);
+        Conta conta = null;
+        Optional<Conta> opConta = contaRepository.findByNumeroWithTransacoes(nuConta);
+        if (opConta.isPresent()) {
+            conta = opConta.get();
+        }
+        return conta;
     }
 
     public Conta findByIdWithTransacoes(Integer idConta) {
-        return contaRepository.findByIdWithTransacoes(idConta);
+        Conta conta = null;
+        Optional<Conta> opConta = contaRepository.findByIdWithTransacoes(idConta);
+        if (opConta.isPresent()) {
+            conta = opConta.get();
+        }
+        return conta;
     }
 }

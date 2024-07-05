@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class ContaService implements Service<Conta, Integer> {
@@ -25,7 +26,12 @@ public class ContaService implements Service<Conta, Integer> {
 
     @Override
     public Conta findById(Integer id) {
-        return contaRepository.findById(id);
+        Conta conta = null;
+        Optional<Conta> opConta = contaRepository.findById(id);
+        if (opConta.isPresent()) {
+            conta = opConta.get();
+        }
+        return conta;
     }
 
     @Override
@@ -33,5 +39,13 @@ public class ContaService implements Service<Conta, Integer> {
         Correntista correntista = correntistaRepository.findById(conta.getCorrentista().getId());
         conta.setCorrentista(correntista);
         return contaRepository.save(conta);
+    }
+
+    public Conta findByNumeroWithTransacoes(String nuConta) {
+        return contaRepository.findByNumeroWithTransacoes(nuConta);
+    }
+
+    public Conta findByIdWithTransacoes(Integer idConta) {
+        return contaRepository.findByIdWithTransacoes(idConta);
     }
 }

@@ -1,11 +1,13 @@
 package br.edu.ifpb.pweb2.bitbank.service;
 
+import br.edu.ifpb.pweb2.bitbank.model.Conta;
 import br.edu.ifpb.pweb2.bitbank.model.Correntista;
 import br.edu.ifpb.pweb2.bitbank.repository.CorrentistaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 // @Component poderia ser usado no lugar - @Service é um @Component com mais semântica
 @Component
@@ -21,7 +23,12 @@ public class CorrentistaService implements Service<Correntista, Integer> {
 
     @Override
     public Correntista findById(Integer id) {
-        return correntistaRepository.findById(id);
+        Correntista correntista = null;
+        Optional<Correntista> opCorrentista = correntistaRepository.findById(id);
+        if (opCorrentista.isPresent()) {
+            correntista = opCorrentista.get();
+        }
+        return correntista;
     }
 
     @Override

@@ -36,14 +36,15 @@ public class ContaService implements Service<Conta, Integer> {
 
     @Override
     public Conta save(Conta conta) {
-        Correntista correntista = correntistaRepository.findById(conta.getCorrentista().getId());
-        conta.setCorrentista(correntista);
+        Optional<Correntista> correntista = correntistaRepository.findById(conta.getCorrentista().getId());
+        correntista.ifPresent(conta::setCorrentista);
+        // conta.setCorrentista(correntista);
         return contaRepository.save(conta);
     }
 
     public Conta findByNumeroWithTransacoes(String nuConta) {
         Conta conta = null;
-        Optional<Conta> opConta = contaRepository.findByNumeroWithTransacoes(nuConta);
+        Optional<Conta> opConta = contaRepository.findByNumero(nuConta);
         if (opConta.isPresent()) {
             conta = opConta.get();
         }
@@ -52,7 +53,7 @@ public class ContaService implements Service<Conta, Integer> {
 
     public Conta findByIdWithTransacoes(Integer idConta) {
         Conta conta = null;
-        Optional<Conta> opConta = contaRepository.findByIdWithTransacoes(idConta);
+        Optional<Conta> opConta = contaRepository.findById(idConta);
         if (opConta.isPresent()) {
             conta = opConta.get();
         }

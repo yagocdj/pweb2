@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+    <title>Bitbank - Cadastro de operações</title>
+</head>
+
+<body>
+    <h1>Cadastro de operação</h1>
+    <div th:if="${conta == null}">
+        <form th:action="@{/contas/operacao}" method="post">
+            <label for="nuConta">Número da conta</label>
+            <!-- The input 'nuConta' will be rendered only once in the page (according to the condition) -->
+            <input type="text" id="nuConta" name="nuConta" class="form-control">
+            <button type="submit">Próximo</button>
+        </form>
+    </div>
+
+    <div th:if="${conta != null}">
+        <ul>
+            <li>Conta:
+                <span th:text="${conta.numero}"></span>
+            </li>
+            <li>Correntista:
+                <span th:text="${conta.correntista.nome}"></span>
+            </li>
+            <li>Data de abertura:
+                <span th:text="${conta.data}"></span>
+            </li>
+        </ul>
+        <div style="margin-bottom: 30px"></div>
+
+        <h4>Informações da transação</h4>
+        <hr class="mb-4">
+
+        <form action="operacao" method="post" th:object="${transacao}">
+            <input type="hidden" th:field="*{id}">
+            <input type="hidden" th:value="${conta.numero}" id="nuConta" name="nuConta">
+
+            <label for="descricao">Descrição</label>
+            <input type="text" class="form-control" th:field="*{descricao}"> <br>
+
+            <label for="data"></label>
+            <input type="text" class="form-control" th:field="*{data}">
+            <label for="valor">Valor</label>
+            <input type="text" class="form-control" th:field="*{valor}"> <br>
+
+            <button type="submit">Realizar operação</button>
+        </form>
+    </div>
+</body>
+</html>

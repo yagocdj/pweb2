@@ -24,6 +24,13 @@ public class CorrentistaController {
         return "correntistas/form";
     }
 
+    @GetMapping("/list")
+    public ModelAndView listAll(ModelAndView mv) {
+        mv.addObject("correntistas", correntistaService.findAll());
+        mv.setViewName("correntistas/list");
+        return mv;
+    }
+
     @PostMapping("/save")
     public ModelAndView save(Correntista correntista, ModelAndView mv) {
         String correntistaName = correntista.getNome();

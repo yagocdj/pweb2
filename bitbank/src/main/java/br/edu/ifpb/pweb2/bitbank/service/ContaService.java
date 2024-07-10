@@ -44,7 +44,7 @@ public class ContaService implements Service<Conta, Integer> {
 
     public Conta findByNumeroWithTransacoes(String nuConta) {
         Conta conta = null;
-        Optional<Conta> opConta = contaRepository.findByNumero(nuConta);
+        Optional<Conta> opConta = contaRepository.findByNumeroWithTransacoes(nuConta);
         if (opConta.isPresent()) {
             conta = opConta.get();
         }
@@ -53,7 +53,7 @@ public class ContaService implements Service<Conta, Integer> {
 
     public Conta findByIdWithTransacoes(Integer idConta) {
         Conta conta = null;
-        Optional<Conta> opConta = contaRepository.findById(idConta);
+        Optional<Conta> opConta = contaRepository.findByIdWithTransacoes(idConta);
         if (opConta.isPresent()) {
             conta = opConta.get();
         }

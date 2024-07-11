@@ -12,7 +12,7 @@
     <h1>BitBank - Cadastro de correntistas</h1>
     <div th:text="${mensagem}" style="color: red"></div>
 
-    <form th:action="@{/correntistas/save}" method="POST" th:object="${correntista}">
+    <form th:action="@{/correntistas}" method="POST" th:object="${correntista}">
         <input type="hidden" th:field="*{id}">
 
         <label for="input-nome">Nome:</label>

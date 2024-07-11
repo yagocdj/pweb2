@@ -12,7 +12,7 @@
     <h1>BitBank - Cadastro de contas</h1>
     <div th:text="${mensagem}" style="color: red"></div>
 
-    <form th:action="@{/contas/save}" method="POST" th:object="${conta}">
+    <form th:action="@{/contas}" method="POST" th:object="${conta}">
         <input type="hidden" th:field="*{id}">
 
         <!--

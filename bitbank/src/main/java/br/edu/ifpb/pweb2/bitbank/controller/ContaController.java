@@ -8,6 +8,7 @@ import br.edu.ifpb.pweb2.bitbank.repository.CorrentistaRepository;
 import br.edu.ifpb.pweb2.bitbank.service.ContaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -37,17 +38,18 @@ public class ContaController {
         return mv;
     }
 
-    @PostMapping("/save")
-    public ModelAndView save(Conta conta, ModelAndView mv) {
+    @PostMapping
+    public ModelAndView save(Conta conta, ModelAndView model) {
         contaService.save(conta);
-        mv.setViewName("contas/list");
-        mv.addObject("contas", contaService.findAll());
-        return mv;
+        model.setViewName("redirect:/contas");
+        return model;
     }
 
-    @GetMapping("/list")
-    public String listAll() {
-        return "contas/list";
+    @GetMapping
+    public ModelAndView listAll(ModelAndView model) {
+        model.addObject("contas", contaService.findAll());
+        model.setViewName("contas/list");
+        return model;
     }
 
     @GetMapping("/nuconta")

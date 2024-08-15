@@ -59,4 +59,8 @@ public class ContaService implements Service<Conta, Integer> {
         }
         return conta;
     }
+
+    public void deleteById(Integer id) {
+        contaRepository.deleteById(id);
+    }
 }

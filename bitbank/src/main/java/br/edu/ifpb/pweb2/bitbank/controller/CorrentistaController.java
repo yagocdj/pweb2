@@ -1,11 +1,13 @@
 package br.edu.ifpb.pweb2.bitbank.controller;
 
 import br.edu.ifpb.pweb2.bitbank.model.Correntista;
+import br.edu.ifpb.pweb2.bitbank.service.ContaService;
 import br.edu.ifpb.pweb2.bitbank.service.CorrentistaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -41,4 +43,12 @@ public class CorrentistaController {
         return model;
     }
 
+    @PostMapping("/{id}/delete")
+    public ModelAndView deleteById(@PathVariable(value = "id") Integer id,
+                                   ModelAndView modelAndView, RedirectAttributes attr) {
+        correntistaService.deleteById(id);
+        attr.addFlashAttribute("mensagem", "Correntista removido com sucesso");
+        modelAndView.setViewName("redirect:/correntistas");
+        return modelAndView;
+    }
 }

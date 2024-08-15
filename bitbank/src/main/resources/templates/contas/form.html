@@ -23,19 +23,34 @@
 </head>
 <body>
 
-    <div class="logo-bar mb-3 p-3">
+    <div class="logo-bar mb-0 p-3">
         <span class="logo-font">
             <img th:src="@{/imagens/bitbank-header-t.png}" alt="Bitbank logo"/> BitBank
         </span>
     </div>
+
+    <nav class="navbar navbar-expand navbar-light bg-light
+        d-flex justify-content-between mb-3">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" th:href="@{/home}">Home</a>
+            <a class="nav-item nav-link" th:href="@{/correntistas}">Correntistas</a>
+            <a class="nav-item nav-link" th:href="@{/contas}">Contas</a>
+            <a class="nav-item nav-link" th:href="@{/contas/nuconta}">Operações</a>
+        </div>
+        <div style="margin-right: 5px;"><a href="#">
+            <button class="btn btn-outline-secondary my-2 my-sm-0">Sair</button></a>
+        </div>
+    </nav>
+
     <div class="container">
-        <div th:text="${mensagem}" class="alert alert-success"></div>
+        <!--/*@thymesVar id="mensagem" type="java.lang.String"*/-->
+        <div th:if="${mensagem ne null}" th:text="${mensagem}" class="alert alert-success"></div>
         <div class="card">
             <div class="card-header">
                 Cadastro de contas
             </div>
-            <div class="card-body">
-                <form th:action="@{/contas}" method="POST" th:object="${conta}">
+            <form th:action="@{/contas}" method="POST" th:object="${conta}">
+                <div class="card-body">
                     <input type="hidden" th:field="*{id}">
 
                     <!--
@@ -58,10 +73,13 @@
                     <label for="data" class="form-label">Data</label>
                     <input class="form-control" type="date" id="data" th:field="*{data}">
 
+                </div>
+                <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Salvar</button>
                     <a role="button" class="btn btn-secondary" th:href="@{/contas}">Cancelar</a>
-                </form>
-            </div>
+                </div>
+            </form>
+
         </div>
     </div>
 

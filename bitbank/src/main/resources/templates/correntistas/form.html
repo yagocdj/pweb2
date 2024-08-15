@@ -22,46 +22,61 @@
     <title>Cadastro de correntistas</title>
 </head>
 <body>
-    <div class="logo-bar mb-3 p-3">
-        <span class="logo-font">
-            <img th:src="@{/imagens/bitbank-header-t.png}" alt="Logo do bitbank"/> BitBank
-        </span>
+<div class="logo-bar mb-0 p-3">
+    <span class="logo-font">
+        <img th:src="@{/imagens/bitbank-header-t.png}" alt="Logo do bitbank"/> BitBank
+    </span>
+</div>
+
+<nav class="navbar navbar-expand navbar-light bg-light
+        d-flex justify-content-between mb-3">
+    <div class="navbar-nav">
+        <a class="nav-item nav-link" th:href="@{/home}">Home</a>
+        <a class="nav-item nav-link" th:href="@{/correntistas}">Correntistas</a>
+        <a class="nav-item nav-link" th:href="@{/contas}">Contas</a>
+        <a class="nav-item nav-link" th:href="@{/contas/nuconta}">Operações</a>
     </div>
+    <div style="margin-right: 5px;"><a href="#">
+        <button class="btn btn-outline-secondary my-2 my-sm-0">Sair</button>
+    </a>
+    </div>
+</nav>
 
-    <div class="container">
-        <div th:text="${mensagem}" class="alert alert-success"></div>
-        <div class="card">
-            <div class="card-header">
-                Cadastro de Correntista
-            </div>
-            <div class="card-body">
-                <form th:action="@{/correntistas}" method="POST" th:object="${correntista}">
-                    <input type="hidden" th:field="*{id}">
-
-                    <label for="input-nome" class="form-label">Nome:</label>
-                    <input class="form-control" type="text" name="nome" id="input-nome" th:field="*{nome}">
-
-                    <label for="input-email" class="form-label">Email:</label>
-                    <input class="form-control" type="email" name="email" id="input-email" th:field="*{email}">
-
-                    <label for="input-senha" class="form-label">Senha:</label>
-                    <input class="form-control" type="password" name="senha" id="input-senha" th:field="*{senha}">
-
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="input-admin" th:field="*{admin}">
-                        <label class="form-check-label" for="input-admin">
-                            Admin?
-                        </label>
-                    </div>
-
-                    <div class="flex">
-                        <input type="submit" class="btn btn-primary" value="Salvar">
-                        <a role="button" class="btn btn-secondary" th:href="@{/correntistas}">Cancelar</a>
-                    </div>
-                </form>
-            </div>
+<div class="container">
+    <!--/*@thymesVar id="mensagem" type="java.lang.String"*/-->
+    <div th:if="${mensagem ne null}" th:text="${mensagem}" class="alert alert-success"></div>
+    <div class="card">
+        <div class="card-header">
+            Cadastro de correntista
         </div>
+        <form th:action="@{/correntistas}" method="POST" th:object="${correntista}">
+            <div class="card-body">
+                <input type="hidden" th:field="*{id}">
+
+                <label for="input-nome" class="form-label">Nome:</label>
+                <input class="form-control" type="text" name="nome" id="input-nome" th:field="*{nome}">
+
+                <label for="input-email" class="form-label">Email:</label>
+                <input class="form-control" type="email" name="email" id="input-email" th:field="*{email}">
+
+                <label for="input-senha" class="form-label">Senha:</label>
+                <input class="form-control" type="password" name="senha" id="input-senha" th:field="*{senha}">
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="input-admin" th:field="*{admin}">
+                    <label class="form-check-label" for="input-admin">
+                        Admin?
+                    </label>
+                </div>
+
+            </div>
+            <div class="card-footer">
+                <input type="submit" class="btn btn-primary" value="Salvar">
+                <a role="button" class="btn btn-secondary" th:href="@{/correntistas}">Cancelar</a>
+            </div>
+        </form>
     </div>
+</div>
 
 </body>
 </html>

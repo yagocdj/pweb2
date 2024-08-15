@@ -22,13 +22,28 @@
     <title>BitBank - Listagem de contas</title>
 </head>
 <body>
-    <div class="logo-bar mb-3 p-3">
+    <div class="logo-bar mb-0 p-3">
         <span class="logo-font">
             <img th:src="@{/imagens/bitbank-header-t.png}" alt="Bitbank logo"/> BitBank
         </span>
     </div>
+
+    <nav class="navbar navbar-expand navbar-light bg-light
+        d-flex justify-content-between mb-3">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" th:href="@{/home}">Home</a>
+            <a class="nav-item nav-link" th:href="@{/correntistas}">Correntistas</a>
+            <a class="nav-item nav-link" th:href="@{/contas}">Contas</a>
+            <a class="nav-item nav-link" th:href="@{/contas/nuconta}">Operações</a>
+        </div>
+        <div style="margin-right: 5px;"><a href="#">
+            <button class="btn btn-outline-secondary my-2 my-sm-0">Sair</button></a>
+        </div>
+    </nav>
+
     <div class="container">
-        <div th:text="${mensagem}" class="alert alert-success"></div>
+        <!--/*@thymesVar id="mensagem" type="java.lang.String"*/-->
+        <div th:if="${mensagem ne null}" th:text="${mensagem}" class="alert alert-success"></div>
         <div class="card">
             <div class="card-header">
                 Contas
@@ -39,24 +54,38 @@
                     <button type="submit" class="btn btn-primary">Nova</button>
                 </form>
 
-                <table class="table table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Número</th>
-                        <th>Data</th>
-                        <th>Correntista</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="conta : ${contas}">
-                        <td>[[${conta.id}]]</td>
-                        <td th:text="${conta.numero}"></td>
-                        <td th:text="${#temporals.format(conta.data, 'dd/MM/yyyy')}"></td>
-                        <td th:text="${conta.correntista.nome}"></td>
-                    </tr>
-                    </tbody>
-                </table>
+                <div th:if="${ not #lists.isEmpty(contas)}">
+                    <div th:text="'Total: ' + ${#lists.size(contas)} + ' registros'"
+                         style="text-align: right; color: gray; font-size: 0.85em;"></div>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Número</th>
+                            <th>Data</th>
+                            <th>Correntista</th>
+                            <th>Operação</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="conta : ${contas}">
+                            <td>[[${conta.id}]]</td>
+                            <td>
+                                <a th:href="@{/contas/{id}(id = ${conta.id})}">
+                                    [[${conta.numero}]]
+                                </a>
+                            </td>
+                            <td th:text="${#temporals.format(conta.data, 'dd/MM/yyyy')}"></td>
+                            <td th:text="${conta.correntista.nome ?: 'Anônimo'}"></td>
+                            <td>
+                                <form th:action="@{/contas/{id}/delete(id=${conta.id})}" method="post">
+                                    <button type="submit" class="btn btn-primary btn-sm">Excluir</button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

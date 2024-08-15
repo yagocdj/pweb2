@@ -72,4 +72,8 @@ public class CorrentistaService implements Service<Correntista, Integer> {
     public boolean isNameSmallerThan50Chars(String name) {
         return name.length() <= 50;
     }
+
+    public void deleteById(Integer id) {
+        correntistaRepository.deleteById(id);
+    }
 }

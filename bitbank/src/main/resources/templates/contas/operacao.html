@@ -1,52 +1,105 @@
 <!doctype html>
 <html lang="pt-BR" xmlns:th="https://www.thymeleaf.org/">
-
 <head>
-    <title>Bitbank - Cadastro de operações</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <!-- Bootstrap 5.1.4 -->
+    <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css}"
+          rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+          crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fugaz+One&display=swap"
+          rel="stylesheet">
+    <link rel="icon" th:href="@{/imagens/favicon.ico}" type="image/x-icon">
+    <title>Cadastro de operações</title>
 </head>
-
 <body>
-    <h1>Cadastro de operação</h1>
-    <div th:if="${conta == null}">
-        <form th:action="@{/contas/operacao}" method="post">
-            <label for="nuConta">Número da conta</label>
-            <!-- The input 'nuConta' will be rendered only once in the page (according to the condition) -->
-            <input type="text" id="nuConta" name="nuConta" class="form-control">
-            <button type="submit">Próximo</button>
-        </form>
+    <div class="logo-bar mb-0 p-3">
+        <span class="logo-font">
+            <img th:src="@{/imagens/bitbank-header-t.png}" alt="Bitbank logo"/> BitBank
+        </span>
     </div>
 
-    <div th:if="${conta != null}">
-        <ul>
-            <li>Conta:
-                <span th:text="${conta.numero}"></span>
-            </li>
-            <li>Correntista:
-                <span th:text="${conta.correntista.nome}"></span>
-            </li>
-            <li>Data de abertura:
-                <span th:text="${conta.data}"></span>
-            </li>
-        </ul>
-        <div style="margin-bottom: 30px"></div>
+    <nav class="navbar navbar-expand navbar-light bg-light
+        d-flex justify-content-between mb-3">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" th:href="@{/home}">Home</a>
+            <a class="nav-item nav-link" th:href="@{/correntistas}">Correntistas</a>
+            <a class="nav-item nav-link" th:href="@{/contas}">Contas</a>
+            <a class="nav-item nav-link" th:href="@{/contas/nuconta}">Operações</a>
+        </div>
+        <div style="margin-right: 5px;"><a href="#">
+            <button class="btn btn-outline-secondary my-2 my-sm-0">Sair</button></a>
+        </div>
+    </nav>
 
-        <h4>Informações da transação</h4>
-        <hr class="mb-4">
+    <div class="container">
+        <!--/*@thymesVar id="mensagem" type="java.lang.String"*/-->
+        <div th:if="${mensagem ne null}" th:text="${mensagem}" class="alert alert-success"></div>
+        <div class="card">
+            <div class="card-header">
+                Operação em conta
+            </div>
 
-        <form action="operacao" method="post" th:object="${transacao}">
-            <input type="hidden" th:field="*{id}">
-            <input type="hidden" th:value="${conta.numero}" id="nuConta" name="nuConta">
+            <div th:if="${conta == null}">
+                <form th:action="@{/contas/operacao}" method="post">
+                    <div class="card-body">
+                        <label for="nuConta">Número da conta</label>
+                        <!-- The input 'nuConta' will be rendered only once in the page (according to the condition) -->
+                        <input type="text" id="nuConta" name="nuConta" class="form-control">
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Próximo</button>
+                    </div>
+                </form>
+            </div>
 
-            <label for="descricao">Descrição</label>
-            <input type="text" class="form-control" th:field="*{descricao}"> <br>
+            <div th:if="${conta != null}">
+                <div class="card-body">
+                    <ul>
+                        <li>Conta:
+                            <span th:text="${conta.numero}"></span>
+                        </li>
+                        <li>Correntista:
+                            <span th:text="${conta.correntista.nome}"></span>
+                        </li>
+                        <li>Data de abertura:
+                            <span th:text="${#temporals.format(conta.data, 'dd/MM/yyyy')}"></span>
+                        </li>
+                    </ul>
+                    <div style="margin-bottom: 30px"></div>
 
-            <label for="data"></label>
-            <input type="text" class="form-control" th:field="*{data}">
-            <label for="valor">Valor</label>
-            <input type="text" class="form-control" th:field="*{valor}"> <br>
+                    <hr class="mb-4">
+                    <h4>Informações da transação</h4>
 
-            <button type="submit">Realizar operação</button>
-        </form>
+                    <!--/*@thymesVar id="transacao" type="br.edu.ifpb.pweb2.bitbank.model.Transacao"*/-->
+                    <form action="operacao" method="post" th:object="${transacao}">
+                        <input type="hidden" th:field="*{id}">
+                        <input type="hidden" th:value="${conta.numero}" id="nuConta" name="nuConta">
+
+                        <label for="descricao">Descrição</label>
+                        <input type="text" class="form-control" id="descricao" th:field="*{descricao}"> <br>
+
+                        <label for="data">Data</label>
+                        <input type="text" class="form-control" id="data" th:field="*{data}"> <br>
+
+                        <label for="valor">Valor</label>
+                        <input type="text" class="form-control" id="valor" th:field="*{valor}"> <br>
+
+                        <button type="submit" class="btn btn-primary">Realizar operação</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
+
 </body>
 </html>
